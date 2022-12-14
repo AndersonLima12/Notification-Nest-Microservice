@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+# remove env
+.env
+
 # Logs
 logs
 *.log
