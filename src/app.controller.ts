@@ -1,27 +1,15 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { randomUUID } from 'crypto';
-import { PrismaService } from './prisma.service';
-import { CreateNotificationBody } from './create-notification-body';
+import { Body, Controller, Post } from '@nestjs/common';
+import { CreateTeamMemberBody } from './dtos/create-team-member-body';
+import { RocketMembersRepository } from './repositories/rocket-members-repository';
 
-@Controller('notifications')
+@Controller('app')
 export class AppController {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private rocketMembersRepository: RocketMembersRepository) {}
 
-  @Get()
-  list() {
-    return this.prisma.notification.findMany();
-  }
+  @Post('hello')
+  async getHello(@Body() body: CreateTeamMemberBody) {
+    const { name, function: memberFunction } = body;
 
-  @Post()
-  async create(@Body() body: CreateNotificationBody) {
-    const { recipientId, content, category } = body;
-    await this.prisma.notification.create({
-      data: {
-        id: randomUUID(),
-        content,
-        category,
-        recipientId,
-      },
-    });
+    await this.rocketMembersRepository.create(name, memberFunction);
   }
 }

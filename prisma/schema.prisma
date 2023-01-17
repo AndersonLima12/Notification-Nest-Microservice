@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,13 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Notification {
-  id          String    @id
-  recipientId String
-  content     String
-  category    String
-  readAt      DateTime?
-  createdAt   DateTime  @default(now())
-
-  @@index([recipientId])
+model RocketTeamMember {
+  id       String @id
+  name     String
+  function String
 }
